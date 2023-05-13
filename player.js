@@ -25,7 +25,7 @@ export class Player {
   }
    drawImage() {
     const img = new Image();
-    img.src = "http://clipart-library.com/images/8T68RMeac.png";
+    img.src = "./images/player.png";
     
     this.context.save();
     this.context.translate(this.x, this.y);
