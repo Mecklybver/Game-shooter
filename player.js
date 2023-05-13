@@ -25,7 +25,7 @@ export class Player {
   }
    drawImage() {
     const img = new Image();
-    img.src = "./images/player.png";
+    img.src = "./images/player.png"; //adding player
     
     this.context.save();
     this.context.translate(this.x, this.y);
