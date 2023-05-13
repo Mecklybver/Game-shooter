@@ -42,7 +42,7 @@ export class Enemy {
     let img;
     if (this.movement == "linear") {
       img = new Image();
-      img.src = "http://clipart-library.com/image_gallery/275522.png";
+      img.src = "./images/asteroid.png";
 
       this.context.save();
       this.context.translate(this.x, this.y);
@@ -61,8 +61,8 @@ export class Enemy {
       img = new Image();
       Math.random() < 0.7
         ? (img.src =
-            "http://cdn0.iconfinder.com/data/icons/alien-space/512/spiral_whirl_whirlpool_curve_rotate_alien-512.png")
-        : (img.src = "https://freesvg.org/img/1537561674.png");
+            "./images/spiral.png")
+        : (img.src = "./images/colors.png");
 
       this.context.save();
       this.context.translate(this.x, this.y);
@@ -97,7 +97,7 @@ export class Enemy {
     } else if (this.movement == "homing") {
       img = new Image();
       img.src =
-        "https://static.vecteezy.com/system/resources/thumbnails/009/385/490/small/ufo-spaceship-concept-clipart-design-illustration-free-png.png";
+        "./images/alien.png";
       this.context.save();
       this.context.translate(this.x, this.y);
       const randomAngle =
