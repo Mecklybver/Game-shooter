@@ -71,7 +71,7 @@ export class Enemy {
       const randomAngle =
         Math.random() * (Math.PI * 2) * Math.random() * 2 + 0.1;
       this.context.rotate(randomAngle);
-      
+      //
       // CRAZY MOVEMENT
       //
 //           const time = Date.now();
