@@ -177,7 +177,7 @@ function animate(stampTime) {
                 Math.random() * 1,
                 `hsl(${Math.random() * 30 + 50}, 100%, ${Math.random() * 80 + 20}%)`,
                 {
-                  x: (Math.random() - 0.5) * (Math.random() * 20),
+                  x: (Math.random() - 0.5) * (Math.random() * 20), // it makes it more impressive
                   y: (Math.random() - 0.5) * (Math.random() * 20)
                 },
                 ctx
