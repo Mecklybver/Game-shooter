@@ -169,13 +169,14 @@ function animate(stampTime) {
       if (dist - player.radius - bullet.radius < 1) {
         player.visible = false;
         
+        
           for (let i = 0; i < player.radius * 3; i++) {
             particles.push(
               new Particle(
                 player.x,
                 player.y,
-                Math.random() * 1,
-                `hsl(${Math.random() * 30 + 50}, 100%, ${Math.random() * 80 + 20}%)`,
+                Math.random() * 1.5,
+                `hsl(${Math.random() * 55 + 30}, 100%, ${Math.random() * 30 + 60}%)`,
                 {
                   x: (Math.random() - 0.5) * (Math.random() * 20), // it makes it more impressive
                   y: (Math.random() - 0.5) * (Math.random() * 20)
@@ -222,8 +223,8 @@ function animate(stampTime) {
             new Particle(
               player.x,
               player.y,
-              Math.random() * 1,
-              `hsl(${Math.random() * 30 + 50}, 100%, ${Math.random() * 80 + 20 }%)`,
+              Math.random() * 1.5,
+              `hsl(${Math.random() * 55 + 30}, 100%, ${Math.random() * 30 + 60 }%)`,
               {
                 x: (Math.random() - 0.5) * (Math.random() * 20),
                 y: (Math.random() - 0.5) * (Math.random() * 20)
