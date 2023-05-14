@@ -17,7 +17,10 @@ export class Enemy {
     this.angle = angle;
     this.angle2 = angle2;
     this.debug = debug;
-    this.movement = "spinning" //testing purpose
+    this.amplitudeMin = Math.random() * 2.5 + 1
+    this.amplitudeMax = Math.random() * 8  + 3
+    this.movement = "homing" //testing purpose
+
     // this.movement =
     //   Math.random() < 0.8
     //     ? "linear"
@@ -155,19 +158,16 @@ export class Enemy {
       this.velocity.y = Math.sin(this.angle);
       this.center.x = this.x + this.velocity.x;
       this.center.y = this.y + this.velocity.y;
+      
       //this make the spinning movement change its circle radius
-      if (Math.random() >= 0.85) {
-        let amplitudeMin = 2;
-        let amplitudeMax = 16;
+       
         let amplitude =
-          ((amplitudeMax - amplitudeMin) / 2) * Math.sin(Date.now() / 1000) +
-          (amplitudeMax + amplitudeMin) / 2;
+          ((this.amplitudeMax - this.amplitudeMin) / 2) * Math.sin(Date.now() / 1000) +
+          (this.amplitudeMax + this.amplitudeMin) / 2;
         this.x = this.center.x + Math.cos(this.radians) * amplitude;
         this.y = this.center.y + Math.sin(this.radians) * amplitude;
-      } else {
-        this.x = this.center.x + Math.cos(this.radians) * 3.5;
-        this.y = this.center.y + Math.sin(this.radians) * 0.5;
-      }
+    
+ 
     }
 
     this.Image();

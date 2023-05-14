@@ -1,11 +1,13 @@
 export class Bullet {
-    constructor(context, x, y, radius, color, velocity) {
+    constructor(context, x, y, radius, color, velocity, shooterIndex) {
       this.x = x;
       this.y = y;
       this.radius = radius;
       this.color = color;
       this.velocity = velocity;
       this.context = context;
+      this.shooterIndex = shooterIndex;
+      this.timer = 0
     }
     
     draw() {
@@ -19,6 +21,7 @@ export class Bullet {
       this.draw();
       this.x += this.velocity.x;
       this.y += this.velocity.y;
+      this.timer++
   
     
       }

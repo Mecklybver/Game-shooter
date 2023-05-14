@@ -272,8 +272,82 @@ function animate(stampTime) {
   });
   enemies.forEach(enemy => {
     enemy.update(player, bullets);
+
   });
   // joystick.update()
+ 
+
+  // make enemies explode when the collide each other
+  for (let a = 0; a < enemies.length; a++) {
+    for (let b = a + 1; b < enemies.length; b++) {
+      if (Math.hypot(enemies[a].x - enemies[b].x, enemies[a].y - enemies[b].y) < enemies[a].radius + enemies[b].radius) {
+        for (let i = 0; i < enemies[a].radius * 5; i++) {
+          particles.push(
+            new Particle(
+              enemies[a].x,
+              enemies[a].y,
+              Math.random() * 1.5,
+              enemies[a].color,
+              {
+                x: (Math.random() - 0.5) * (Math.random() * 20),
+                y: (Math.random() - 0.5) * (Math.random() * 20)
+              },
+              ctx
+            )
+          );
+          particles.push(
+            new Particle(
+              enemies[b].x,
+              enemies[b].y,
+              Math.random() * 1.5,
+              enemies[b].color,
+              {
+                x: (Math.random() - 0.5) * (Math.random() * 20),
+                y: (Math.random() - 0.5) * (Math.random() * 20)
+              },
+              ctx
+            )
+          );
+        }
+        enemies.splice(b, 1);
+        enemies.splice(a, 1);
+        // update the indices to continue iterating properly
+        a--;
+        b--;
+      }
+    }
+  }
+
+
+  //make enemies explode when colliding from alien's bullets
+  for (let i = 0; i < enemies.length; i++) {
+    for (let j = 0; j < bullets.length; j++) {
+      if (Math.hypot(enemies[i].x - bullets[j].x, enemies[i].y - bullets[j].y) < enemies[i].radius 
+      && bullets[j].timer > 20  ) {
+        for (let k = 0; k < enemies[i].radius * 3; k++) {
+          particles.push(
+            new Particle(
+              enemies[i].x,
+              enemies[i].y,
+              Math.random() * 1.5,
+              `hsl(${Math.random() * 55 + 30}, 100%, ${Math.random() * 30 + 60 }%)`,
+              {
+                x: (Math.random() - 0.5) * (Math.random() * 20),
+                y: (Math.random() - 0.5) * (Math.random() * 20)
+              },
+              ctx
+            )
+          );
+        }
+        enemies.splice(i, 1);
+        bullets.splice(j, 1);
+        i--;
+        break;
+      }
+    }
+  }
+  
+  
 
   clock();
 }
