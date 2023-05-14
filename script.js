@@ -169,16 +169,16 @@ function animate(stampTime) {
       if (dist - player.radius - bullet.radius < 1) {
         player.visible = false;
         
-          for (let i = 0; i < player.radius * 2; i++) {
+          for (let i = 0; i < player.radius * 3; i++) {
             particles.push(
               new Particle(
                 player.x,
                 player.y,
-                Math.random() * 2,
-                `hsl(${Math.random() * 160 + 200}, 100%, ${Math.random() * 80 + 20}%)`,
+                Math.random() * 1,
+                `hsl(${Math.random() * 30 + 50}, 100%, ${Math.random() * 80 + 20}%)`,
                 {
-                  x: (Math.random() - 0.5) * (Math.random() * 6),
-                  y: (Math.random() - 0.5) * (Math.random() * 6)
+                  x: (Math.random() - 0.5) * (Math.random() * 20),
+                  y: (Math.random() - 0.5) * (Math.random() * 20)
                 },
                 ctx
               )
@@ -217,16 +217,16 @@ function animate(stampTime) {
     ) {
       player.visible = false;
       
-        for (let i = 0; i < player.radius * 2; i++) {
+        for (let i = 0; i < player.radius * 3; i++) {
           particles.push(
             new Particle(
               player.x,
               player.y,
-              Math.random() * 2,
-              `hsl(${Math.random() * 160 + 200}, 100%, ${Math.random() * 80 + 20 }%)`,
+              Math.random() * 1,
+              `hsl(${Math.random() * 30 + 50}, 100%, ${Math.random() * 80 + 20 }%)`,
               {
-                x: (Math.random() - 0.5) * (Math.random() * 6),
-                y: (Math.random() - 0.5) * (Math.random() * 6)
+                x: (Math.random() - 0.5) * (Math.random() * 20),
+                y: (Math.random() - 0.5) * (Math.random() * 20)
               },
               ctx
             )
