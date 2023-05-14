@@ -66,6 +66,7 @@ let lastTime = 0;
 let score = 0;
 let scoreColor = "white";
 let animation;
+let end = false;
 
 function animate(stampTime) {
   ////ANIMATE FUNCTION IS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -166,7 +167,31 @@ function animate(stampTime) {
     bullets.forEach((bullet, index) => {
       const dist = Math.hypot(bullet.x - player.x, bullet.y - player.y);
       if (dist - player.radius - bullet.radius < 1) {
+        player.visible = false;
+        
+          for (let i = 0; i < player.radius * 2; i++) {
+            particles.push(
+              new Particle(
+                player.x,
+                player.y,
+                Math.random() * 2,
+                `hsl(${Math.random() * 160 + 200}, 100%, ${Math.random() * 80 + 20}%)`,
+                {
+                  x: (Math.random() - 0.5) * (Math.random() * 6),
+                  y: (Math.random() - 0.5) * (Math.random() * 6)
+                },
+                ctx
+              )
+            );
+          }
+          end = true
+        
+
+
+
         // endGame();
+        setTimeout(() => {
+        if (end){
         new EndGame(
           canvas,
           ctx,
@@ -178,7 +203,9 @@ function animate(stampTime) {
           player,
           moving,
           shooting
-        );
+        );}
+      }, 5000);
+
         // gameover();
         // restart();
       }
@@ -188,7 +215,30 @@ function animate(stampTime) {
       Math.hypot(enemy.x - player.x, enemy.y - player.y) <
       enemy.radius + player.radius
     ) {
+      player.visible = false;
+      
+        for (let i = 0; i < player.radius * 2; i++) {
+          particles.push(
+            new Particle(
+              player.x,
+              player.y,
+              Math.random() * 2,
+              `hsl(${Math.random() * 160 + 200}, 100%, ${Math.random() * 80 + 20 }%)`,
+              {
+                x: (Math.random() - 0.5) * (Math.random() * 6),
+                y: (Math.random() - 0.5) * (Math.random() * 6)
+              },
+              ctx
+            )
+          );
+        }
+        end = true
+      
+      
+
       // endGame();
+      setTimeout(() => {
+      if (end){
       new EndGame(
         canvas,
         ctx,
@@ -198,7 +248,8 @@ function animate(stampTime) {
         enemies,
         bullets,
         player
-      );
+      );}
+    }, 5000);
       // gameover();
       // restart();
     }
