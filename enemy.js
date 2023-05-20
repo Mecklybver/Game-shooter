@@ -206,7 +206,7 @@ export class Enemy {
         (Math.random() * canvas.height) / 2 - y,
         (Math.random() * canvas.width) / 2 - x
       );
-      const angle2 = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
+      // const angle2 = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
       // const angle2 = Math.atan2(player.y - y, player.x - x);
       const velocity2 = Math.random() * 3 + 1;
 

@@ -40,7 +40,7 @@ const particles = [];
 
 let angle2;
 let velocity;
-let time = Math.random() * 1500 + 500;
+let time = Math.random() * 2800 + 200;
 let enemyIntervalId = null;
 
 let startTime = new Date().getTime() / 1000;
@@ -191,10 +191,8 @@ function animate(stampTime) {
               )
             );
           }}
+          end = true
           
-        
-
-
 
         // endGame();
         setTimeout(() => {
@@ -366,7 +364,10 @@ function animate(stampTime) {
 // joystick.addEventListeners()
 if (game == "yes" || "y") addEventListener("load", animate(0));
 
+let vary = Math.floor(Math.random() * 3 + 1)
+for (let i=0; i< vary; i++){
 Enemy.spawnEnemies(enemies, time, enemyIntervalId, canvas, ctx, player, debug);
+}
 
 shooting(projectiles, player, ctx);
 
