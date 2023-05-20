@@ -11,20 +11,26 @@ import { Particle } from "./particles.js";
 import { EndGame } from "./endgame.js";
 
 let game;
+let ratio = window.devicePixelRatio
 let initiate = confirm("Welcome to the game! \n Would you like to play?");
 if (initiate) game = "yes";
 const canvas = document.createElement("canvas");
 document.body.appendChild(canvas);
 const ctx = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = innerWidth
+canvas.height = innerHeight
+// canvas.style.width = `${window.innerWidth}px`;
+// canvas.style.height = `${window.innerHeight}px`;
+// ctx.scale(ratio, ratio)
 
+
+// player coordinates
 const x = canvas.width / 2;
 const y = canvas.height / 2;
 
 // const joystick = new Joystick(canvas,ctx, 50, canvas.height - 50, 10, "analog" );
 
-let debug = false;
+export let debug = false;
 
 const player = new Player(ctx, x, y, 15, "white", debug);
 const projectiles = [];
@@ -166,11 +172,11 @@ function animate(stampTime) {
 
     bullets.forEach((bullet, index) => {
       const dist = Math.hypot(bullet.x - player.x, bullet.y - player.y);
-      if (dist - player.radius - bullet.radius < 1) {
+      if (player.visible && dist - player.radius - bullet.radius < 1) {
         player.visible = false;
         
-        
-          for (let i = 0; i < player.radius * 3; i++) {
+       for ( let j = 0; j <5 ; j++){
+          for (let i = 0; i < player.radius * 10; i++) {
             particles.push(
               new Particle(
                 player.x,
@@ -178,14 +184,14 @@ function animate(stampTime) {
                 Math.random() * 1.5,
                 `hsl(${Math.random() * 55 + 30}, 100%, ${Math.random() * 30 + 60}%)`,
                 {
-                  x: (Math.random() - 0.5) * (Math.random() * 20), // it makes it more impressive
-                  y: (Math.random() - 0.5) * (Math.random() * 20)
+                  x: (Math.random() - 0.5) * (Math.random() * 10), // it makes it more impressive
+                  y: (Math.random() - 0.5) * (Math.random() * 10)
                 },
                 ctx
               )
             );
-          }
-          end = true
+          }}
+          
         
 
 
@@ -213,12 +219,13 @@ function animate(stampTime) {
     });
 
     if (
+      player.visible &&
       Math.hypot(enemy.x - player.x, enemy.y - player.y) <
       enemy.radius + player.radius
-    ) {
+    ){
       player.visible = false;
-      
-        for (let i = 0; i < player.radius * 3; i++) {
+      for (let a = 0; a < 5; a++){
+        for (let i = 0; i < player.radius * 20; i++) {
           particles.push(
             new Particle(
               player.x,
@@ -232,7 +239,7 @@ function animate(stampTime) {
               ctx
             )
           );
-        }
+        }}
         end = true
       
       
@@ -278,9 +285,14 @@ function animate(stampTime) {
  
 
   // make enemies explode when the collide each other
+  
   for (let a = 0; a < enemies.length; a++) {
     for (let b = a + 1; b < enemies.length; b++) {
-      if (Math.hypot(enemies[a].x - enemies[b].x, enemies[a].y - enemies[b].y) < enemies[a].radius + enemies[b].radius) {
+      if (enemies[a].movement !="spinning" 
+      && enemies[b].movement !="spinning" 
+      && Math.hypot(enemies[a].x - enemies[b].x, enemies[a].y - enemies[b].y)
+       < enemies[a].radius + enemies[b].radius) 
+       {
         for (let i = 0; i < enemies[a].radius * 5; i++) {
           particles.push(
             new Particle(
@@ -311,7 +323,6 @@ function animate(stampTime) {
         }
         enemies.splice(b, 1);
         enemies.splice(a, 1);
-        // update the indices to continue iterating properly
         a--;
         b--;
       }
@@ -353,9 +364,9 @@ function animate(stampTime) {
 }
 
 // joystick.addEventListeners()
-if (game == "yes" || "y") addEventListener("load", animate());
+if (game == "yes" || "y") addEventListener("load", animate(0));
 
-Enemy.spawnEnemies(enemies, time, enemyIntervalId, canvas, ctx, player);
+Enemy.spawnEnemies(enemies, time, enemyIntervalId, canvas, ctx, player, debug);
 
 shooting(projectiles, player, ctx);
 

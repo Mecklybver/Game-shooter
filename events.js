@@ -10,9 +10,10 @@ export function shooting(projectiles, player, ctx) {
       x: Math.cos(angle) * 5,
       y: Math.sin(angle) * 5
     };
+    if (player.visible){
     projectiles.push(
       new Projectile(ctx, player.x, player.y, 5, "red", velocity)
-    );
+    );}
   });
 }
 
@@ -24,7 +25,9 @@ function handleF2(player, enemies) {
 }
 
 export function moving(player, enemies, debug) {
+  
   addEventListener("keydown", e => {
+   if (player.visible) {
     switch (e.key) {
       case "ArrowUp":
         player.velocity.y = -5;
@@ -41,7 +44,7 @@ export function moving(player, enemies, debug) {
       case "F2":
         handleF2(player, enemies);
         break;
-    }
+    }}
   });
 
   addEventListener("keyup", e => {
@@ -50,6 +53,7 @@ export function moving(player, enemies, debug) {
   });
 
   addEventListener("keypress", e => {
+    if (player.visible){
     switch (e.key) {
       case "w":
         player.velocity.y = -5;
@@ -66,6 +70,6 @@ export function moving(player, enemies, debug) {
       case "F2":
         handleF2(player, enemies);
         break;
-    }
+    }}
   });
 }

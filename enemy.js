@@ -1,8 +1,9 @@
 // [Refactoring, please wait...]
 import { Bullet } from "./bullet.js";
+import { debug as Debug } from "./script.js";
 
 export class Enemy {
-  constructor(context, x, y, radius, color, velocity, angle, angle2, debug) {
+  constructor(context, x, y, radius, color, velocity, angle, angle2) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -16,17 +17,19 @@ export class Enemy {
     this.context = context;
     this.angle = angle;
     this.angle2 = angle2;
-    this.debug = debug;
+    this.debug = Debug
     this.amplitudeMin = Math.random() * 2.5 + 1
     this.amplitudeMax = Math.random() * 8  + 3
-    this.movement = "homing" //testing purpose
+   
 
-    // this.movement =
-    //   Math.random() < 0.8
-    //     ? "linear"
-    //     : Math.random() < 0.8
-    //     ? "spinning"
-    //     : "homing";
+    // this.movement = "homing" //testing purpose
+
+    this.movement =
+      Math.random() < 0.8
+        ? "linear"
+        : Math.random() < 0.8
+        ? "spinning"
+        : "homing";
     if (this.movement == "homing") this.radius -= 15;
     if (this.movement == "spinning") this.radius += 15;
     if (this.radius < 10) this.radius = 10;
