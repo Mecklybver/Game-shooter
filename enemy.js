@@ -3,7 +3,7 @@ import { Bullet } from "./bullet.js";
 import { debug as Debug } from "./script.js";
 
 export class Enemy {
-  constructor(context, x, y, radius, color, velocity, angle, angle2) {
+  constructor(context, x, y, radius, color, velocity, angle, angle2, debug) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -177,12 +177,13 @@ export class Enemy {
     if (this.debug) this.draw();
   }
 
-  static spawnEnemies(enemies, time, enemyIntervalId, canvas, ctx) {
+  static spawnEnemies(enemies, time, enemyIntervalId, canvas, ctx, debug) {
     this.enemies = enemies;
     this.time = time;
     this.enemyIntervalId = enemyIntervalId;
     this.canvas = canvas;
-    this.ctx;
+    this.ctx = ctx
+    this.debug = debug
     clearInterval(this.enemyIntervalId);
     setInterval(() => {
       const radius = Math.random() * 25 + 15;
@@ -206,8 +207,7 @@ export class Enemy {
         (Math.random() * canvas.height) / 2 - y,
         (Math.random() * canvas.width) / 2 - x
       );
-      // const angle2 = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
-      // const angle2 = Math.atan2(player.y - y, player.x - x);
+    
       const velocity2 = Math.random() * 3 + 1;
 
       let velocity = {
@@ -215,7 +215,10 @@ export class Enemy {
         y: Math.sin(angle) * velocity2
       };
 
-      this.enemies.push(new Enemy(ctx, x, y, radius, color, velocity, angle));
+      const enemy = new Enemy(ctx, x, y, radius, color, velocity, angle, debug);
+      enemy.debug = debug; 
+
+    this.enemies.push(enemy);
     }, time);
   }
 }
