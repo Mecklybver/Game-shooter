@@ -1,6 +1,7 @@
 // [Refactoring, please wait...]
 import { Bullet } from "./bullet.js";
-import { debug as Debug } from "./script.js";
+import { debugScript } from "./events.js";
+
 
 export class Enemy {
   constructor(context, x, y, radius, color, velocity, angle, angle2, debug) {
@@ -16,8 +17,8 @@ export class Enemy {
     this.velocity = velocity;
     this.context = context;
     this.angle = angle;
+    this.debug = debug
     this.angle2 = angle2;
-    this.debug = Debug
     this.amplitudeMin = Math.random() * 2.5 + 1
     this.amplitudeMax = Math.random() * 8  + 3
    
@@ -186,6 +187,8 @@ export class Enemy {
     this.debug = debug
     clearInterval(this.enemyIntervalId);
     setInterval(() => {
+
+      
       const radius = Math.random() * 25 + 15;
 
       let x;
@@ -214,11 +217,7 @@ export class Enemy {
         x: Math.cos(angle) * velocity2,
         y: Math.sin(angle) * velocity2
       };
-
-      const enemy = new Enemy(ctx, x, y, radius, color, velocity, angle, debug);
-      enemy.debug = debug; 
-
-    this.enemies.push(enemy);
+      this.enemies.push(new Enemy(ctx, x, y, radius, color, velocity, angle, debugScript));
     }, time);
   }
 }
