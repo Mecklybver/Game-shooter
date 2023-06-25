@@ -42,7 +42,7 @@ const particles = [];
 
 let angle2;
 let velocity;
-let time = Math.random() * 2800 + 200;
+let time = Math.random() * 2800 + 800;
 let enemyIntervalId = null;
 
 let startTime = new Date().getTime() / 1000;
