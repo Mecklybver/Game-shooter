@@ -39,6 +39,7 @@ export function shooting(projectiles, player, ctx) {
 }
 export let debugScript;
 function handleF2(player, enemies) {
+  debugScript = false;
   player.debug = !player.debug;
   for (let i = 0; i < enemies.length; i++) {
     enemies[i].debug = player.debug;

@@ -145,6 +145,7 @@ export class Enemy {
   // this.x += this.velocity.x
   // this.y += this.velocity.y
   update(player, bullets) {
+    
     if (this.movement == "linear") {
       this.x = this.x + this.velocity.x;
       this.y = this.y + this.velocity.y;
@@ -184,17 +185,14 @@ export class Enemy {
     this.time = time;
     this.enemyIntervalId = enemyIntervalId;
     this.canvas = canvas;
-    this.ctx = ctx
-    this.debug = debug
+    this.ctx = ctx;
+    this.debug = debug;
     clearInterval(this.enemyIntervalId);
     setInterval(() => {
-
-      
       const radius = Math.random() * 25 + 15;
-
       let x;
       let y;
-
+  
       if (Math.random() < 0.5) {
         x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
         y = Math.random() * canvas.height;
@@ -202,25 +200,27 @@ export class Enemy {
         x = Math.random() * canvas.width;
         y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
       }
-
+  
       const color = `rgba(${Math.random() * 360}, ${Math.random() * 360}, ${
         Math.random() * 360
       }, 0.6)`;
-
+  
       const angle = Math.atan2(
         (Math.random() * canvas.height) / 2 - y,
         (Math.random() * canvas.width) / 2 - x
       );
-    
+  
       const velocity2 = Math.random() * 3 + 1;
-
+  
       let velocity = {
         x: Math.cos(angle) * velocity2,
         y: Math.sin(angle) * velocity2
       };
-      this.enemies.push(new Enemy(ctx, x, y, radius, color, velocity, angle, debugScript));
+      this.enemies.push(new Enemy(ctx, x, y, radius, color, velocity, angle, debug));
     }, time);
   }
+  
+  
 }
 
 // else  if (!this.Homing || !this.isLinear)) {

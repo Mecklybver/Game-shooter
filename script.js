@@ -10,6 +10,7 @@ import { shooting, moving } from "./events.js";
 import { Particle } from "./particles.js";
 import { EndGame } from "./endgame.js";
 import { Restart } from "./restart.js";
+import { debugScript } from "./events.js";
 
 let game;
 // let ratio = window.devicePixelRatio;
@@ -32,7 +33,7 @@ const y = canvas.height / 2;
 
 // const joystick = new Joystick(canvas,ctx, 50, canvas.height - 50, 10, "analog" );
 
-export let debug = false;
+let debug = debugScript
 
 const player = new Player(ctx, x, y, 15, "white", debug);
 const projectiles = [];
@@ -78,7 +79,7 @@ let end = false;
 
 export function animate(stampTime) {
   ////ANIMATE FUNCTION IS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+  debug = debugScript
   deltaTime = stampTime - lastTime;
   lastTime = stampTime;
   ctx.save();
