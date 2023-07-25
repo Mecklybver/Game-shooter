@@ -69,13 +69,17 @@ function clock() {
 }
 
 let background =
-  "https://mir-s3-cdn-cf.behance.net/project_modules/1400/d9d7ad104360973.5f6142500e188.png";
+  "https://i.pinimg.com/originals/18/91/7d/18917daf305de90a97aa2707f4cc34eb.jpg";
 let deltaTime = 0;
 let lastTime = 0;
 let score = 0;
 let scoreColor = "white";
 export let animation;
 let end = false;
+
+
+let bx =  0
+let by = 0;
 
 export function animate(stampTime) {
   ////ANIMATE FUNCTION IS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -89,15 +93,14 @@ export function animate(stampTime) {
   ctx.restore();
   animation = requestAnimationFrame(animate);
  
-  let img;
  
-    img = new Image();
-    img.src = background;
 
   ctx.save();
   ctx.globalAlpha = 0.1; // set the globalAlpha to 0.5 for 50% transparency
   Math.random() * (Math.PI * 2) * (0.00095 * (Math.random() + 0.5));
 
+  let bg = new Image();
+  bg.src = background
   if (player.debug){
      ctx.fillStyle = `rgba(0, 0, 0, 0.4)`;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -105,8 +108,11 @@ export function animate(stampTime) {
   }
 
   else if(!player.debug){ 
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bg, bx, by, canvas.width, canvas.height);
+    ctx.drawImage(bg, bx, by + canvas.height, canvas.width, canvas.height);
   }
+  by -= 0.02
+  if (by + canvas.height <= 0 ) by = 0;
 
   ctx.restore();
 
