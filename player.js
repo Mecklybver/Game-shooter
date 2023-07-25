@@ -10,6 +10,7 @@ export class Player {
     this.gameOver = false;
     this.debug = debug
     this.color = color
+    this.visible = true;
     this.velocity = {
       x: 0,
       y: 0
@@ -18,12 +19,14 @@ export class Player {
   }
   
   draw() {
+    if (this.visible){
     this.context.beginPath()
     this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
     this.context.fillStyle = this.color
-    this.context.fill()
+    this.context.fill()}
   }
    drawImage() {
+    if (this.visible){
     const img = new Image();
     img.src = "./images/player.png"; //adding player
     
@@ -41,7 +44,7 @@ export class Player {
     );
     // this.context.drawImage(img, this.x - this.radius -10, this.y - this.radius -10, this.radius * 2 +20, this.radius * 2 +20);
 
-    this.context.restore();
+    this.context.restore();}
   }
   update() {
     this.drawImage()

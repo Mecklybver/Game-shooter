@@ -1,5 +1,7 @@
 // [Refactoring, please wait...]
 import { Bullet } from "./bullet.js";
+import { debugScript } from "./events.js";
+
 
 export class Enemy {
   constructor(context, x, y, radius, color, velocity, angle, angle2, debug) {
@@ -15,15 +17,20 @@ export class Enemy {
     this.velocity = velocity;
     this.context = context;
     this.angle = angle;
-    this.angle2 = angle2;
     this.debug = debug
+    this.angle2 = angle2;
+    this.amplitudeMin = Math.random() * 2.5 + 1
+    this.amplitudeMax = Math.random() * 8  + 3
+   
+
+    // this.movement = "homing" //testing purpose
 
     this.movement =
       Math.random() < 0.8
         ? "linear"
-          : Math.random() < 0.8 
-            ? "spinning" 
-                : "homing";
+        : Math.random() < 0.8
+        ? "spinning"
+        : "homing";
     if (this.movement == "homing") this.radius -= 15;
     if (this.movement == "spinning") this.radius += 15;
     if (this.radius < 10) this.radius = 10;
@@ -60,32 +67,32 @@ export class Enemy {
     } else if (this.movement == "spinning") {
       img = new Image();
       Math.random() < 0.7
-        ? (img.src =
-            "./images/spiral.png")
+        ? (img.src = "./images/spiral.png")
         : (img.src = "./images/colors.png");
 
       this.context.save();
       this.context.translate(this.x, this.y);
       //SPINNING MOVEMENT
-      
+
       const randomAngle =
         Math.random() * (Math.PI * 2) * Math.random() * 2 + 0.1;
       this.context.rotate(randomAngle);
       //
+
       // CRAZY MOVEMENT
       //
-//           const time = Date.now();
-// const rotationSpeed = 0.002;
-// const rotationAngle = Math.sin(time * rotationSpeed) * Math.PI * 2;
-// const translationSpeed = 0.01;
-// const translationDistance = Math.sin(time * translationSpeed) * 50;
-// const translationDirection = Math.sin(time * translationSpeed * 2) > 0 ? 1 : -1;
-// const translationX = Math.cos(rotationAngle) * translationDistance * translationDirection;
-// const translationY = Math.sin(rotationAngle) * translationDistance * translationDirection;
-// this.context.translate(translationX, translationY);
-// this.context.rotate(rotationAngle);
+      //           const time = Date.now();
+      // const rotationSpeed = 0.002;
+      // const rotationAngle = Math.sin(time * rotationSpeed) * Math.PI * 2;
+      // const translationSpeed = 0.01;
+      // const translationDistance = Math.sin(time * translationSpeed) * 50;
+      // const translationDirection = Math.sin(time * translationSpeed * 2) > 0 ? 1 : -1;
+      // const translationX = Math.cos(rotationAngle) * translationDistance * translationDirection;
+      // const translationY = Math.sin(rotationAngle) * translationDistance * translationDirection;
+      // this.context.translate(translationX, translationY);
+      // this.context.rotate(rotationAngle);
 
-     // */
+      // */
       this.context.drawImage(
         img,
         -this.radius,
@@ -96,8 +103,7 @@ export class Enemy {
       this.context.restore();
     } else if (this.movement == "homing") {
       img = new Image();
-      img.src =
-        "./images/alien.png";
+      img.src = "./images/alien.png";
       this.context.save();
       this.context.translate(this.x, this.y);
       const randomAngle =
@@ -157,26 +163,33 @@ export class Enemy {
       this.velocity.y = Math.sin(this.angle);
       this.center.x = this.x + this.velocity.x;
       this.center.y = this.y + this.velocity.y;
-      this.x = this.center.x + Math.cos(this.radians) * 4.5;
-      this.y = this.center.y + Math.sin(this.radians) * 4.5;
+      
+      //this make the spinning movement change its circle radius
+       
+        let amplitude =
+          ((this.amplitudeMax - this.amplitudeMin) / 2) * Math.sin(Date.now() / 1000) +
+          (this.amplitudeMax + this.amplitudeMin) / 2;
+        this.x = this.center.x + Math.cos(this.radians) * amplitude;
+        this.y = this.center.y + Math.sin(this.radians) * amplitude;
+    
+ 
     }
 
-
-    
     this.Image();
-    if(this.debug) this.draw();
-
-
+    if (this.debug) this.draw();
   }
 
-  static spawnEnemies(enemies, time, enemyIntervalId, canvas, ctx) {
+  static spawnEnemies(enemies, time, enemyIntervalId, canvas, ctx, debug) {
     this.enemies = enemies;
     this.time = time;
     this.enemyIntervalId = enemyIntervalId;
     this.canvas = canvas;
-    this.ctx;
+    this.ctx = ctx
+    this.debug = debug
     clearInterval(this.enemyIntervalId);
     setInterval(() => {
+
+      
       const radius = Math.random() * 25 + 15;
 
       let x;
@@ -190,23 +203,22 @@ export class Enemy {
         y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
       }
 
-      const color = `rgba(${Math.random() * 360}, ${Math.random() *
-        360}, ${Math.random() * 360}, 0.6)`;
+      const color = `rgba(${Math.random() * 360}, ${Math.random() * 360}, ${
+        Math.random() * 360
+      }, 0.6)`;
 
       const angle = Math.atan2(
-        Math.random() * canvas.height / 2 - y,
-        Math.random() * canvas.width / 2 - x
+        (Math.random() * canvas.height) / 2 - y,
+        (Math.random() * canvas.width) / 2 - x
       );
-      const angle2 = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
-      // const angle2 = Math.atan2(player.y - y, player.x - x);
+    
       const velocity2 = Math.random() * 3 + 1;
 
       let velocity = {
         x: Math.cos(angle) * velocity2,
         y: Math.sin(angle) * velocity2
       };
-
-      this.enemies.push(new Enemy(ctx, x, y, radius, color, velocity, angle));
+      this.enemies.push(new Enemy(ctx, x, y, radius, color, velocity, angle, debugScript));
     }, time);
   }
 }
